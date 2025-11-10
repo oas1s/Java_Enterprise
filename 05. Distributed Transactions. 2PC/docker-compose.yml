@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  seata-server:
+    image: seataio/seata-server:2.0.0
+    container_name: seata-server
+    ports:
+      - "8091:8091"
+    environment:
+      - SEATA_CONFIG_NAME=file:/seata-config/registry
+    volumes:
+      - ./seata-config:/seata-config
+
+  orders-db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: orders
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"
+
+  payments-db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: payments
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5434:5432"
